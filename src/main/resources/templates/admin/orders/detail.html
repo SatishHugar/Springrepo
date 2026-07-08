@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <div class="d-flex" style="min-height: 100vh;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-column" style="width: 250px; position: fixed; height: 100vh;">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" th:href="@{/admin/dashboard}">
+                    <i class="fas fa-heart" style="color: #d8a5a5;"></i> SatPall
+                </a>
+                <div class="collapse navbar-collapse" id="sidebarNav">
+                    <ul class="navbar-nav flex-column mt-3">
+                        <li class="nav-item mb-3">
+                            <a class="nav-link" th:href="@{/admin/orders}">
+                                <i class="fas fa-shopping-cart me-2"></i> Orders
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div style="margin-left: 250px; width: calc(100% - 250px);">
+            <div class="container-fluid py-5">
+                <a th:href="@{/admin/orders}" class="btn btn-outline-secondary mb-3">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Orders
+                </a>
+
+                <div class="row mb-4 g-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-2">Order #</h6>
+                                <h5 class="fw-bold" th:text="${order.orderNumber}"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-2">Total Amount</h6>
+                                <h5 class="fw-bold" th:text="'₹' + ${order.grandTotal}" style="color: #d8a5a5;"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-2">Status</h6>
+                                <span class="badge bg-warning" th:text="${order.status}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-2">Payment Method</h6>
+                                <h6 class="fw-bold" th:text="${order.paymentMethod}"></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-light border-0 py-3">
+                                <h5 class="mb-0 fw-bold">Order Items</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${order.orderItems}">
+                                            <td th:text="${item.product.name}"></td>
+                                            <td th:text="${item.quantity}"></td>
+                                            <td th:text="'₹' + ${item.unitPrice}"></td>
+                                            <td th:text="'₹' + ${item.totalPrice}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-light border-0 py-3">
+                                <h5 class="mb-0 fw-bold">Update Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Order Status</label>
+                                        <select name="status" class="form-select">
+                                            <option value="PENDING" th:selected="${order.status == 'PENDING'}">Pending</option>
+                                            <option value="PROCESSING" th:selected="${order.status == 'PROCESSING'}">Processing</option>
+                                            <option value="SHIPPED" th:selected="${order.status == 'SHIPPED'}">Shipped</option>
+                                            <option value="DELIVERED" th:selected="${order.status == 'DELIVERED'}">Delivered</option>
+                                            <option value="CANCELLED" th:selected="${order.status == 'CANCELLED'}">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-custom">
+                                        <i class="fas fa-save me-2"></i> Update Status
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-light border-0 py-3">
+                                <h5 class="mb-0 fw-bold">Order Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal:</span>
+                                    <span th:text="'₹' + ${order.subtotal}"></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tax:</span>
+                                    <span th:text="'₹' + ${order.tax}"></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>Shipping:</span>
+                                    <span th:text="'₹' + ${order.shippingCost}"></span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-bold">Total:</span>
+                                    <span class="fw-bold h5" th:text="'₹' + ${order.grandTotal}" style="color: #d8a5a5;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-light border-0 py-3">
+                                <h5 class="mb-0 fw-bold">Shipping Address</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2" th:text="${order.shippingAddress}"></p>
+                                <p class="mb-2" th:text="${order.shippingCity}"></p>
+                                <p class="mb-2" th:text="${order.shippingPostalCode}"></p>
+                                <p th:text="${order.shippingPhone}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

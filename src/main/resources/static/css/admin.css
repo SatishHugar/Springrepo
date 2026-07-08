@@ -1,0 +1,103 @@
+/* Admin Styles */
+.navbar-dark {
+    background-color: #2c3e50 !important;
+}
+
+.navbar-dark .navbar-brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white !important;
+}
+
+.navbar-dark .nav-link {
+    color: #bdc3c7 !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-dark .nav-link:hover,
+.navbar-dark .nav-link.active {
+    color: #d8a5a5 !important;
+    background-color: rgba(216, 165, 165, 0.1);
+    border-left: 3px solid #d8a5a5;
+    padding-left: calc(1rem - 3px);
+}
+
+.card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.btn-outline-primary {
+    color: #d8a5a5;
+    border-color: #d8a5a5;
+}
+
+.btn-outline-primary:hover {
+    background-color: #d8a5a5;
+    border-color: #d8a5a5;
+}
+
+/* Stats Cards */
+.card-body {
+    padding: 25px;
+}
+
+/* Table Enhancements */
+.table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+}
+
+/* Sidebar Active State */
+.sidebar-active {
+    background-color: rgba(216, 165, 165, 0.15);
+    border-left: 3px solid #d8a5a5;
+}
+
+/* Form Elements */
+.form-control:focus,
+.form-select:focus {
+    border-color: #d8a5a5;
+    box-shadow: 0 0 0 0.2rem rgba(216, 165, 165, 0.25);
+}
+
+/* Success Message */
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+/* Error Message */
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Button Group */
+.btn-group {
+    gap: 5px;
+}
+
+/* Dashboard Stats */
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #d8a5a5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
