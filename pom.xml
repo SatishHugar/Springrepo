@@ -67,7 +67,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- SLF4J and Logback (included in spring-boot-starter) -->
+		<!-- SLF4J and Logback -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-logging</artifactId>
